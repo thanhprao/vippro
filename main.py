@@ -1,3 +1,4 @@
+from selenium import webdriver
 from flask import Flask, jsonify, render_template, request
 import os
 from selenium.webdriver.chrome.service import Service
