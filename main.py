@@ -13,14 +13,24 @@ def index():
     
 @app.get("/homepage")
 async def demo_get():
-    selenium_code()
+    driver=createDriver()
+    getGoogleHomepage(driver)
 
-def selenium_code():
-    chrome_option = webdriver.ChromeOptions()
-    s = Service(ChromeDriverManager().install())
-    driver = webdriver.Chrome(service=s,options=chrome_option)
-    driver.maximize_window()
-    driver.get("https://google.com")
+def createDriver() -> webdriver.Chrome:
+    chrome_options = webdriver.ChromeOptions()
+    chrome_options.add_argument("--headless")
+    chrome_options.add_argument("--no-sandbox")
+    chrome_options.add_argument("--disable-dev-shm-usage")
+    
+    prefs = {"profile.managed_default_content_settings.images":2}
+    chrome_options.headless = True
+    chrome_options.add_experimental_option("prefs", prefs)
+    myDriver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=chrome_options)
+
+    return myDriver
+    
+def getGoogleHomepage(driver: webdriver.Chrome):
+    driver.get("https://www.24h.com.vn")
 
 if __name__ == '__main__':
     app.run(debug=True, port=os.getenv("PORT", default=5000))
