@@ -11,15 +11,5 @@ app = Flask(__name__, template_folder='Template')
 def index():
     return render_template('index.html')
     
-@app.get("/homepage")
-async def demo_get():
-    chrome_option = webdriver.ChromeOptions()
-    # chrome_option.add_argument("--user-data-dir="+accounts)
-    # chrome_option.add_argument("--profile-directory="+profile)
-    s = Service(ChromeDriverManager().install())
-    driver = webdriver.Chrome(service=s,options=chrome_option)
-    driver.maximize_window()
-    driver.get("https://google.com")
-    
 if __name__ == '__main__':
     app.run(debug=True, port=os.getenv("PORT", default=5000))
